@@ -12,23 +12,26 @@ class Deck {
         this.gameDeck.push( gameCard );
     }
     shuffleGameDeck() {
-        for (var card = this.gameDeck.length -1; card > 0; card--) {
-            var lastItem = this.gameDeck[card];
-            var temp = lastItem;
+        for (var card = this.gameDeck.length - 1; card > 0; card--) {
             var randomIndex = Math.floor(Math.random() * card);
-            var randomCard = this.gameDeck[randomIndex];
-            lastItem = randomCard;
-            randomCard = temp;
+            var temp = this.gameDeck[randomIndex];
+            this.gameDeck[randomIndex] = this.gameDeck[card];
+            this.gameDeck[card] = temp;
         }
     }
     shufflePlayerDeck(){
         for (var card = this.playerDeck.length - 1; card > 0; card--) {
-            var lastItem = this.playerDeck[card];
-            var temp = lastItem;
-            var randomIndex = Math.floor(Math.random() * card);
-            var randomCard = this.playerDeck[randomIndex];
-            lastItem = randomCard;
-            randomCard = temp;
+           var randomIndex = Math.floor(Math.random() * card);
+           var temp = this.playerDeck[randomIndex];
+           this.playerDeck[randomIndex] = this.playerDeck[card];
+           this.playerDeck[card] = temp;
+           console.log('the array is now: ', this.playerDeck);
         }
+    }
+    dealPlayerCards( amount ){
+        this.playerDeck.splice(this.playerDeck.length - 1 + amount)
+    }
+    dealGameCard() {
+        this.gameDeck.pop();
     }
 }
