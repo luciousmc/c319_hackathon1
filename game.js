@@ -9,11 +9,20 @@ class Game {
       new Player("player3", false)
     ];
   }
-  makeGameDeck(){
 
+  //takes the json from cardtext.js as a parameter and returns an array of black cards
+  getBlackCards(json){
+    var blackCardsRaw = json.blackCards;
+    var blackCardsRefined = [];
+    for(var card of blackCardsRaw){
+      if(card.pick == 1){
+        blackCardsRefined.push(card.text);
+      }
+    }
+    return blackCardsRefined;
   }
-  makePlayerDeck(){
-    this.playerDeck = new Deck();
+  //takes the json from cardtext.js as a parameter and returns an array of white cards
+  getWhiteCards(json){
+    return json.whiteCards;
   }
-
 }
