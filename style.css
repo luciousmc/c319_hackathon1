@@ -1,0 +1,39 @@
+body{
+    height: 100vh;
+}
+.header-container{
+    height: 20%;
+    background-color: black;
+    text-align: center;
+}
+.title{
+    font-size: 50px;
+}
+.deckArea-container{
+    height: 40%;
+    background-color: black;
+}
+.decks-container{
+    height: 100%;
+}
+.cardDisplay-container{
+    height: 100%;
+}
+.playerArea-container{
+    height: 40%;
+}
+.playerInfo-container{
+    height: 100%;
+}
+.cardArea-container{
+    height: 100%;
+}
+.font{
+    font-family: Helvetica, Arial, sans-serif
+}
+.black {
+    color: black;
+}
+.white {
+    color: white;
+}
