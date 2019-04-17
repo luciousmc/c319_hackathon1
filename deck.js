@@ -1,7 +1,17 @@
 class Deck {
-    constructor( playerCards, gameCards ){
+    constructor( typeOfDeck, cardSet ){
         this.playerDeck = [];
         this.gameDeck = [];
+
+        if (arguments[0] === 'player') {
+            for (var cardIndex = 0; cardIndex < cardSet.length; cardIndex++) {
+                this.playerDeck.push(cardSet[cardIndex]);
+            }
+        } else {
+            for (cardIndex = 0; cardIndex < cardSet.length; cardIndex++){
+                this.gameDeck.push(cardSet[cardIndex]);
+            }
+        }
     }
     makePlayerCard( text ){
         var playerCard = new Card( text );

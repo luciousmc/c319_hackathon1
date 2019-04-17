@@ -1,7 +1,12 @@
 class Game {
   constructor() {
-    this.gameDeck = null;
+    this.cardData = {
+      gameDeck: cardText.blackCards,
+      playerDeck: cardText.whiteCards,
+    };
+
     this.playerDeck = null;
+    this.gameDeck = null;
 
     this.players = [
       new Player("player1", true),
@@ -10,10 +15,10 @@ class Game {
     ];
   }
   makeGameDeck(){
-
+    this.gameDeck = new Deck('game', this.cardData.gameDeck);
   }
   makePlayerDeck(){
-    this.playerDeck = new Deck();
+    this.playerDeck = new Deck( 'player', this.cardData.playerDeck) ;
   }
 
 }
