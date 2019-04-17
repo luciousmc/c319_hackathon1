@@ -13,4 +13,8 @@ function firebaseOnload(){
     console.log(data);
   });
 }
+
+window.onload = function(){
+  console.log(cardText);
+}
 //getAllData grabs the data at any point needed at the beginning
