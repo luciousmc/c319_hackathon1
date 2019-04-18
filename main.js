@@ -18,18 +18,20 @@ function firebaseOnload(){
       game = data;
       game.players.push(new Player(playerNames.pop(), false));
     }
+
+    console.log('Game:', game);
     for(var player of game.players){
-      player.cards = game.deck.dealPlayerCards(5);
+      player.cards = deck.dealPlayerCards(5);
     }
-    game.gameCard = game.deck.dealGameCard();
+    game.gameCard = deck.dealGameCard();
     $(".card-black").text(game.gameCard);
     backend.saveState(game);
+
   });
 
 
 }
 
 window.onload = function(){
-  backend.getAllData();
 }
 //getAllData grabs the data at any point needed at the beginning
