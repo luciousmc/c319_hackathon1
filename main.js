@@ -23,6 +23,7 @@ window.onload = function(){
     player.cards = game.deck.dealPlayerCards(5);
   }
   game.gameCard = game.deck.dealGameCard();
+  $(".card-black").text(game.gameCard);
   console.log(game.gameCard);
 }
 //getAllData grabs the data at any point needed at the beginning
