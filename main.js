@@ -1,6 +1,6 @@
 var deck = new Deck();
+var playerVerification = null;
 var game;
-var playerNames = ["player3", "player2", "player1"];
 var backend = new GenericFBModel("Cards Against Humanity", onChange, firebaseOnload);
 
 function onChange(payload){
@@ -10,27 +10,33 @@ function onChange(payload){
 function firebaseOnload(){
   backend.getAllData(function(data){
     console.log("data is:",data);
+    var playerName = null;
     var player = null;
     if(data === null){
       game = new Game(deck.getWhiteCards(cardText), deck.getBlackCards(cardText));
-
       // game.players.push(new Player(playerNames.pop(), true));
-      player = new Player(playerNames.pop(), true);
+      playerName = game.playerNames.pop()
+      player = new Player(playerName, true);
+      playerVerification = playerName;
       game.players.push(player);
     }
     else{
       game = data;
-      player = new Player(playerNames.pop(), false);
+      playerName = game.playerNames.pop()
+      playerVerification = playerName;
+      player = new Player(playerName, false);
       game.players.push(player);
       // game.players.push(new Player(playerNames.pop(), false));
     }
     console.log('Game:', game);
+    console.log('player verification is:', playerVerification);
     for(var player of game.players){
       player.cards = deck.dealPlayerCards(5);
     }
     player.makePlayerArea();
     game.gameCard = deck.dealGameCard();
-    $(".card-black").text(game.gameCard);
+    console.log(game.gameCard);
+    $(".card-black").text(game.gameCard.text);
     backend.saveState(game);
 
   });
@@ -39,6 +45,5 @@ function firebaseOnload(){
 }
 
 window.onload = function(){
-
 }
 //getAllData grabs the data at any point needed at the beginning
