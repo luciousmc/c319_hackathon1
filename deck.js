@@ -32,6 +32,6 @@ class Deck {
         return this.playerDeck.splice(this.playerDeck.length - amount);
     }
     dealGameCard() {
-        this.gameDeck.pop();
+        return this.gameDeck.pop();
     }
 }

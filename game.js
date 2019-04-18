@@ -4,6 +4,7 @@ class Game {
     this.playerDeck = this.getWhiteCards(cardText);
 
     this.deck = new Deck(this.playerDeck, this.gameDeck);
+    this.gameCard = null;
 
     this.players = [
       new Player("player1", true),

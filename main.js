@@ -22,6 +22,7 @@ window.onload = function(){
   for(var player of game.players){
     player.cards = game.deck.dealPlayerCards(5);
   }
-  console.log(game.players);
+  game.gameCard = game.deck.dealGameCard();
+  console.log(game.gameCard);
 }
 //getAllData grabs the data at any point needed at the beginning
