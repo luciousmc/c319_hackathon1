@@ -31,6 +31,10 @@ body{
 .cardArea-container{
     height: 100%;
 }
+.cardtext, .card-black, .card-white {
+    font-size: 2rem;
+    font-weight: bold;
+}
 .font{
     font-family: 'Helvetica Neue', Arial, sans-serif
 }
@@ -62,10 +66,11 @@ body{
     border-radius: 5%;
 }
 .cardSmall-container{
-    height: 40%;
+    height: 80%;
     position: relative;
     padding-top: 15px;
     padding-bottom: 15px;
+    margin-left: 1%;
 }
 .top-offset{
     top: 5%;
@@ -75,7 +80,6 @@ body{
 }
 .playerTurn-class{
     height: 20%;
-    position: relative;
 }
 .playerTurn{
     top: 30%;
