@@ -1,7 +1,7 @@
 class Deck {
-    constructor( playerCards, gameCards ){
-        this.playerDeck = playerCards;
-        this.gameDeck = gameCards;
+    constructor(){
+        this.playerDeck = this.getWhiteCards(cardText);
+        this.gameDeck = this.getBlackCards(cardText);
     }
     makePlayerCard( text ){
         var playerCard = new Card( text );
@@ -33,5 +33,21 @@ class Deck {
     }
     dealGameCard() {
         return this.gameDeck.pop();
+    }
+    //takes the json from cardtext.js as a parameter and returns an array of black cards
+    getBlackCards(json){
+      var blackCardsRaw = json.blackCards;
+      var blackCardsRefined = [];
+      for(var card of blackCardsRaw){
+        if(card.pick == 1){
+          blackCardsRefined.push(card.text);
+        }
+      }
+      console.log(blackCardsRefined);
+      return blackCardsRefined;
+    }
+    //takes the json from cardtext.js as a parameter and returns an array of white cards
+    getWhiteCards(json){
+      return json.whiteCards;
     }
 }
