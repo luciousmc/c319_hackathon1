@@ -22,10 +22,16 @@ function firebaseOnload(){
     }
     else{
       game = data;
-      playerName = game.playerNames.pop()
-      playerVerification = playerName;
-      player = new Player(playerName, false);
-      game.players.push(player);
+      if(game.playerNames === undefined){
+        $('body').text(game.players.length + " players have already been selected.");
+        return null;
+      }
+      else{
+        playerName = game.playerNames.pop()
+        playerVerification = playerName;
+        player = new Player(playerName, false);
+        game.players.push(player);
+      }
       // game.players.push(new Player(playerNames.pop(), false));
     }
     console.log('Game:', game);
