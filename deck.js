@@ -1,7 +1,17 @@
 class Deck {
     constructor(){
-        this.playerDeck = this.getWhiteCards(cardText);
-        this.gameDeck = this.getBlackCards(cardText);
+        this.playerDeckRaw = this.getWhiteCards(cardText);
+        this.gameDeckRaw = this.getBlackCards(cardText);
+        this.playerDeck = [];
+        this.gameDeck = [];
+
+        for(var card of this.playerDeckRaw){
+          this.makePlayerCard(card);
+        }
+        for(var card of this.gameDeckRaw){
+          this.makeGameCard(card);
+        }
+
     }
     makePlayerCard( text ){
         var playerCard = new Card( text );

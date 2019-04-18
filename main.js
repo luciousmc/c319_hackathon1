@@ -10,19 +10,25 @@ function onChange(payload){
 function firebaseOnload(){
   backend.getAllData(function(data){
     console.log("data is:",data);
+    var player = null;
     if(data === null){
       game = new Game(deck.getWhiteCards(cardText), deck.getBlackCards(cardText));
-      game.players.push(new Player(playerNames.pop(), true));
+
+      // game.players.push(new Player(playerNames.pop(), true));
+      player = new Player(playerNames.pop(), true);
+      game.players.push(player);
     }
     else{
       game = data;
-      game.players.push(new Player(playerNames.pop(), false));
+      player = new Player(playerNames.pop(), false);
+      game.players.push(player);
+      // game.players.push(new Player(playerNames.pop(), false));
     }
-
     console.log('Game:', game);
     for(var player of game.players){
       player.cards = deck.dealPlayerCards(5);
     }
+    player.makePlayerArea();
     game.gameCard = deck.dealGameCard();
     $(".card-black").text(game.gameCard);
     backend.saveState(game);
@@ -33,5 +39,6 @@ function firebaseOnload(){
 }
 
 window.onload = function(){
+
 }
 //getAllData grabs the data at any point needed at the beginning
