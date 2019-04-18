@@ -3,6 +3,8 @@ class Game {
     this.gameDeck = this.getBlackCards(cardText);
     this.playerDeck = this.getWhiteCards(cardText);
 
+    this.deck = new Deck(this.playerDeck, this.gameDeck);
+
     this.players = [
       new Player("player1", true),
       new Player("player2", false),

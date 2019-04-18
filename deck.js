@@ -1,11 +1,11 @@
 class Deck {
     constructor( playerCards, gameCards ){
-        this.playerDeck = [];
-        this.gameDeck = [];
+        this.playerDeck = playerCards;
+        this.gameDeck = gameCards;
     }
     makePlayerCard( text ){
         var playerCard = new Card( text );
-        this.playerDeck.push( playerCard )
+        this.playerDeck.push( playerCard );
     }
     makeGameCard( text ){
         var gameCard = new Card( text );
@@ -25,11 +25,11 @@ class Deck {
            var temp = this.playerDeck[randomIndex];
            this.playerDeck[randomIndex] = this.playerDeck[card];
            this.playerDeck[card] = temp;
-           console.log('the array is now: ', this.playerDeck);
         }
+        console.log('the array is now: ', this.playerDeck);
     }
     dealPlayerCards( amount ){
-        this.playerDeck.splice(this.playerDeck.length - 1 + amount)
+        return this.playerDeck.splice(this.playerDeck.length - amount);
     }
     dealGameCard() {
         this.gameDeck.pop();

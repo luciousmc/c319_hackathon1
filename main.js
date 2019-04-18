@@ -1,3 +1,4 @@
+var game;
 var backend = new GenericFBModel("Cards Against Humanity", onChange, firebaseOnload);
 backend.initialize();
 backend.start();
@@ -7,7 +8,7 @@ function onChange(payload){
 }
 
 function firebaseOnload(){
-  var game = new Game();
+  game = new Game();
   backend.saveState(game);
   backend.getAllData(function(data){
     console.log(data);
@@ -15,6 +16,12 @@ function firebaseOnload(){
 }
 
 window.onload = function(){
-  console.log(cardText);
+  game.deck.shuffleGameDeck();
+  game.deck.shufflePlayerDeck();
+
+  for(var player of game.players){
+    player.cards = game.deck.dealPlayerCards(5);
+  }
+  console.log(game.players);
 }
 //getAllData grabs the data at any point needed at the beginning

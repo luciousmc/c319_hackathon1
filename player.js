@@ -1,7 +1,7 @@
 class Player {
   constructor(name, turn){
     this.name = name;
-    this.cards = new Array(5);
+    this.cards = [];
     this.score = 0;
     this.turn = turn;
   }
