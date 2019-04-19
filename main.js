@@ -6,55 +6,54 @@ var game;
 var backend = new GenericFBModel("Cards Against Humanity", onChange, firebaseOnload);
 
 function onChange(payload){
-  console.log("a change happened: ", payload);
+
 }
 
 function firebaseOnload(){
   backend.getAllData(function(data){
+    var selectedCardsRef = backend.db.database().ref("Cards Against Humanity/selectedCards");
     $(".confirm-button").toggle();
-    console.log("data is:",data);
     var playerName = null;
     var player = null;
     if(data === null){
       game = new Game(deck.playerDeck, deck.gameDeck);
       // game.players.push(new Player(playerNames.pop(), true));
-      playerName = game.playerNames.pop()
+      playerName = game.data.playerNames.pop()
       player = new Player(playerName, true);
       playerVerification = playerName;
-      game.players.push(player);
+      if(game.data.players === null){
+        game.data.players = [player];
+      }
+      else{
+        game.data.players.push(player);
+      }
     }
     else{
-      game = data;
-      if(game.playerNames === undefined){
-        $('body').text(game.players.length + " players have already been selected.");
+      game = new Game(deck.getWhiteCards(cardText), deck.getBlackCards(cardText), backend);
+      game.data = data;
+
+      if(game.data.playerNames === undefined){
+        $('body').text(game.data.players.length + " players have already been selected.");
         return null;
       }
       else{
-        playerName = game.playerNames.pop()
+        playerName = game.data.playerNames.pop()
         playerVerification = playerName;
         player = new Player(playerName, false);
-        game.players.push(player);
+        game.data.players.push(player);
       }
-      // game.players.push(new Player(playerNames.pop(), false));
     }
 
-
-    console.log('Game:', game);
-    console.log('player verification is:', playerVerification);
-    for(var player of game.players){
-      player.cards = deck.dealPlayerCards(5);
-    }
+    selectedCardsRef.on("value", checkSelectedCards);
+    player.cards = deck.dealPlayerCards(5);
     player.makePlayerArea();
     $(".cardtext").on("click",handleCardClick);
     $(".confirm-button").on("click",handleConfirmButtonClick);
-    game.gameCard = deck.dealGameCard();
-    console.log(game.gameCard);
-    $(".card-black").text(game.gameCard.text);
-    backend.saveState(game);
+    game.data.gameCard = deck.dealGameCard();
+    $(".card-black").text(game.data.gameCard.text);
 
+    backend.saveState(game.data);
   });
-
-
 }
 
 function handleCardClick(event){
@@ -70,19 +69,19 @@ function handleCardClick(event){
 
 function handleConfirmButtonClick(){
   var whiteCardText = $(".card-white").text();
-  for(var player of game.players){
+  for(var player of game.data.players){
     for(var card of player.cards){
       if(card.text === whiteCardText){
-        console.log(game);
         card.owner = playerVerification;
-        if(game.selectedCards === undefined){
-          game.selectedCards = [card];
+        if(game.data.selectedCards === undefined){
+          game.data.selectedCards = [card];
+          backend.saveState(game.data);
         }
         else{
-          game.selectedCards.push(card);
+          game.data.selectedCards.push(card);
+          backend.saveState(game.data);
         }
         //deck.dealPlayerCards(1);
-        console.log(game);
       }
     }
   }
@@ -95,9 +94,23 @@ function handleConfirmButtonClick(){
 }
 
 function verifyPlayer(){
-  for(var player of game.players){
+  for(var player of game.data.players){
     if(player.name === playerVerification){
       return player;
+    }
+  }
+}
+
+function checkSelectedCards(snapShot){
+  var value = snapShot.val();
+  debugger;
+  if(value === null){
+    return;
+  }
+  debugger;
+  if(value.length === game.data.players.length-1){
+    if(verifyPlayer().turn){
+      $(".status").text("pick a winning card");
     }
   }
 }
