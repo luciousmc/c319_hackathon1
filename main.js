@@ -16,7 +16,7 @@ function firebaseOnload(){
     var playerName = null;
     var player = null;
     if(data === null){
-      game = new Game(deck.playerDeck, deck.gameDeck);
+      game = new Game(deck.playerDeck, deck.gameDeck, backend);
       // game.players.push(new Player(playerNames.pop(), true));
       playerName = game.data.playerNames.pop()
       player = new Player(playerName, true);
@@ -103,11 +103,9 @@ function verifyPlayer(){
 
 function checkSelectedCards(snapShot){
   var value = snapShot.val();
-  debugger;
   if(value === null){
     return;
   }
-  debugger;
   if(value.length === game.data.players.length-1){
     if(verifyPlayer().turn){
       $(".status").text("pick a winning card");
