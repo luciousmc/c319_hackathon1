@@ -36,7 +36,6 @@ class Deck {
            this.playerDeck[randomIndex] = this.playerDeck[card];
            this.playerDeck[card] = temp;
         }
-        console.log('the array is now: ', this.playerDeck);
     }
     dealPlayerCards( amount ){
         return this.playerDeck.splice(this.playerDeck.length - amount);
@@ -53,7 +52,6 @@ class Deck {
           blackCardsRefined.push(card.text);
         }
       }
-      console.log(blackCardsRefined);
       return blackCardsRefined;
     }
     //takes the json from cardtext.js as a parameter and returns an array of white cards
