@@ -1,0 +1,93 @@
+body{
+    height: 100vh;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+.header-container{
+    height: 10%;
+    background-color: black;
+    text-align: center;
+}
+.title{
+    font-size: 50px;
+    position: relative;
+    top: 10%;
+}
+.deckArea-container{
+    height: 50%;
+    background-color: black;
+}
+.decks-container{
+    height: 100%;
+    text-align: center;
+}
+.cardDisplay-container{
+    height: 80%;
+}
+.playerArea-container{
+    height: 40%;
+}
+.playerInfo-container{
+    height: 100%;
+}
+.cardArea-container{
+    height: 100%;
+}
+.cardtext, .card-black, .card-white {
+    font-size: 2rem;
+    font-weight: bold;
+}
+.font{
+    font-family: 'Helvetica Neue', Arial, sans-serif
+}
+.black {
+    color: black;
+}
+.white {
+    color: white;
+}
+.cardLarge-container{
+    height: 100%;
+    position: relative;
+}
+.card-large{
+    height:100%;
+    position: relative;
+    padding-top: 15px;
+    padding-bottom: 15px;
+
+}
+.border-white{
+    border: 2px solid white;
+    background-color: black;
+    border-radius: 5%;
+}
+.border-black{
+    border: 2px solid black;
+    background-color: white;
+    border-radius: 5%;
+}
+.cardSmall-container{
+    height: 80%;
+    position: relative;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-left: 1%;
+}
+.top-offset{
+    top: 5%;
+}
+.left-offset{
+    margin-left: 5%;
+}
+.playerTurn-class{
+    height: 20%;
+}
+.playerTurn{
+    top: 30%;
+    font-size: 30px;
+    position: relative;
+}
+.image{
+    width: 90%;
+    height: 75%;
+}
