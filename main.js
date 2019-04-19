@@ -1,4 +1,6 @@
 var deck = new Deck();
+deck.shuffleGameDeck();
+deck.shufflePlayerDeck();
 var playerVerification = null;
 var game;
 var backend = new GenericFBModel("Cards Against Humanity", onChange, firebaseOnload);
@@ -14,7 +16,7 @@ function firebaseOnload(){
     var playerName = null;
     var player = null;
     if(data === null){
-      game = new Game(deck.getWhiteCards(cardText), deck.getBlackCards(cardText));
+      game = new Game(deck.playerDeck, deck.gameDeck);
       // game.players.push(new Player(playerNames.pop(), true));
       playerName = game.playerNames.pop()
       player = new Player(playerName, true);
