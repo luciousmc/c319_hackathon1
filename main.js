@@ -29,7 +29,7 @@ function firebaseOnload(){
       }
     }
     else{
-      game = new Game(deck.getWhiteCards(cardText), deck.getBlackCards(cardText), backend);
+      game = new Game(deck.playerDeck, deck.gameDeck, backend);
       game.data = data;
 
       if(game.data.playerNames === undefined){
@@ -49,7 +49,9 @@ function firebaseOnload(){
     player.makePlayerArea();
     $(".cardtext").on("click",handleCardClick);
     $(".confirm-button").on("click",handleConfirmButtonClick);
-    game.data.gameCard = deck.dealGameCard();
+    if(playerVerification === "player1"){
+      game.data.gameCard = deck.dealGameCard();
+    }
     $(".card-black").text(game.data.gameCard.text);
 
     backend.saveState(game.data);
