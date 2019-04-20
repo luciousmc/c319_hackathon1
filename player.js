@@ -4,7 +4,7 @@ class Player {
     this.cards = [];
     this.score = 0;
     this.turn = turn;
-
+    this.ableToClick = true;
   }
 makePlayerArea(){
   for(var card of this.cards){
