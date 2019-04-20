@@ -12,7 +12,7 @@ function onChange(payload){
 function firebaseOnload(){
   backend.getAllData(function(data){
     var selectedCardsRef = backend.db.database().ref("Cards Against Humanity/selectedCards");
-    $(".confirm-button").toggle();
+    $(".confirm-button").hide();
     var playerName = null;
     var player = null;
     if(data === null){
@@ -62,8 +62,10 @@ function handleCardClick(event){
   }
   else{
     var whiteCardText = $(this).text();
-    $(".card-white").text(whiteCardText);
-    $(".confirm-button").toggle();
+    if(verifyPlayer().ableToClick){
+      $(".confirm-button").show();
+      $(".card-white").text(whiteCardText);
+    }
   }
 }
 
@@ -73,6 +75,8 @@ function handleConfirmButtonClick(){
     for(var card of player.cards){
       if(card.text === whiteCardText){
         card.owner = playerVerification;
+        player.ableToClick = false;
+        $(".confirm-button").hide();
         if(game.data.selectedCards === undefined){
           game.data.selectedCards = [card];
           backend.saveState(game.data);
