@@ -12,4 +12,12 @@ makePlayerArea(){
     $('.cardArea-container').append(cardMade);
   }
 }
+  makeSelectedCards(game){
+    if(game.data.selectedCards){
+      var card = Object.assign({}, game.data.selectedCards[game.data.selectedCards.length-1]);
+      card.render = Card.prototype.render;
+      var cardMade = card.render();
+      $('.cardArea-container').append(cardMade);
+    }
+  }
 }

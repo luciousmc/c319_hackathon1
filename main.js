@@ -79,12 +79,16 @@ function handleCardClick(event){
 function handleConfirmButtonClick(){
   var whiteCardText = $(".card-white").text();
   for(var player of game.data.players){
+    if(player.cards === undefined){
+      continue;
+    }
     for(var card of player.cards){
       if(card.text === whiteCardText){
         card.owner = playerVerification;
         player.ableToClick = false;
         $(".confirm-button").hide();
-        if(game.data.selectedCards === undefined){
+        if(game.data.selectedCards === undefined || game.data.selectedCards === null){
+          console.log("if entered");
           game.data.selectedCards = [card];
           backend.saveState(game.data);
         }
@@ -114,6 +118,12 @@ function verifyPlayer(){
 
 function checkSelectedCards(snapShot){
   var value = snapShot.val();
+  var player = Object.assign({}, verifyPlayer());
+  player.makeSelectedCards = Player.prototype.makeSelectedCards;
+  if(player.name === "player1"){
+    player.makeSelectedCards(game);
+    backend.saveState(game.data);
+  }
   if(value === null){
     return;
   }
