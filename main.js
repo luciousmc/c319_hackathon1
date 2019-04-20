@@ -21,6 +21,7 @@ function firebaseOnload(){
       playerName = game.data.playerNames.pop()
       player = new Player(playerName, true);
       playerVerification = playerName;
+      $(".status").text("Waiting for other players");
       if(game.data.players === null){
         game.data.players = [player];
       }
@@ -46,13 +47,17 @@ function firebaseOnload(){
 
     selectedCardsRef.on("value", checkSelectedCards);
     player.cards = deck.dealPlayerCards(5);
-    player.makePlayerArea();
+    if(playerVerification === "player1"){
+    }
+    else{
+      player.makePlayerArea();
+    }
     $(".cardtext").on("click",handleCardClick);
     $(".confirm-button").on("click",handleConfirmButtonClick);
     if(playerVerification === "player1"){
       game.data.gameCard = deck.dealGameCard();
     }
-    $(".card-black").text(game.data.gameCard.text);
+    $(".card-black").html(game.data.gameCard.text);
 
     backend.saveState(game.data);
   });
@@ -66,7 +71,7 @@ function handleCardClick(event){
     var whiteCardText = $(this).text();
     if(verifyPlayer().ableToClick){
       $(".confirm-button").show();
-      $(".card-white").text(whiteCardText);
+      $(".card-white").html(whiteCardText);
     }
   }
 }
