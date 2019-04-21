@@ -17,7 +17,6 @@ function firebaseOnload(){
     var player = null;
     if(data === null){
       game = new Game(deck.playerDeck, deck.gameDeck, backend);
-      // game.players.push(new Player(playerNames.pop(), true));
       playerName = game.data.playerNames.pop()
       player = new Player(playerName, true);
       playerVerification = playerName;
@@ -45,6 +44,7 @@ function firebaseOnload(){
       }
     }
 
+    backend.db.database().ref('Cards Against Humanity/winningCard').on("value", handleWinningCardChange);
     selectedCardsRef.on("value", checkSelectedCards);
     player.cards = deck.dealPlayerCards(5);
     if(playerVerification === "player1"){
@@ -64,53 +64,58 @@ function firebaseOnload(){
 }
 
 function handleCardClick(event){
-  if(verifyPlayer().turn){
-
-  }
-  else{
-    var whiteCardText = $(this).text();
-    if(verifyPlayer().ableToClick){
-      $(".confirm-button").show();
-      $(".card-white").html(whiteCardText);
-    }
+  var whiteCardText = $(this).text();
+  if(verifyPlayer(playerVerification).ableToClick){
+    $(".confirm-button").show();
+    $(".card-white").html(whiteCardText);
   }
 }
 
 function handleConfirmButtonClick(){
   var whiteCardText = $(".card-white").text();
-  for(var player of game.data.players){
-    if(player.cards === undefined){
-      continue;
-    }
-    for(var card of player.cards){
+  if(verifyPlayer(playerVerification).turn){
+    $(".confirm-button").hide();
+    for(var card of game.data.selectedCards){
       if(card.text === whiteCardText){
-        card.owner = playerVerification;
-        player.ableToClick = false;
-        $(".confirm-button").hide();
-        if(game.data.selectedCards === undefined || game.data.selectedCards === null){
-          console.log("if entered");
-          game.data.selectedCards = [card];
-          backend.saveState(game.data);
-        }
-        else{
-          game.data.selectedCards.push(card);
-          backend.saveState(game.data);
-        }
-        //deck.dealPlayerCards(1);
+        game.data.winningCard = Object.assign({}, card);
+        console.log(game.data);
+        backend.saveState(game.data);
       }
     }
   }
-  var arrWhiteCards = $(".cardtext");
-  arrWhiteCards.each(function(index, element){
-    if($(element).text() === whiteCardText){
-      $(element).remove();
+  else{
+    for(var player of game.data.players){
+      if(player.cards === undefined){
+        continue;
+      }
+      for(var card of player.cards){
+        if(card.text === whiteCardText){
+          card.owner = playerVerification;
+          player.ableToClick = false;
+          $(".confirm-button").hide();
+          if(game.data.selectedCards === undefined || game.data.selectedCards === null){
+            game.data.selectedCards = [card];
+            backend.saveState(game.data);
+          }
+          else{
+            game.data.selectedCards.push(card);
+            backend.saveState(game.data);
+          }
+        }
+      }
     }
-  })
+    var arrWhiteCards = $(".cardtext");
+    arrWhiteCards.each(function(index, element){
+      if($(element).text() === whiteCardText){
+        $(element).remove();
+      }
+    })
+  }
 }
 
-function verifyPlayer(){
+function verifyPlayer(playerToCheck){
   for(var player of game.data.players){
-    if(player.name === playerVerification){
+    if(player.name === playerToCheck){
       return player;
     }
   }
@@ -118,7 +123,7 @@ function verifyPlayer(){
 
 function checkSelectedCards(snapShot){
   var value = snapShot.val();
-  var player = Object.assign({}, verifyPlayer());
+  var player = Object.assign({}, verifyPlayer(playerVerification));
   player.makeSelectedCards = Player.prototype.makeSelectedCards;
   if(player.name === "player1"){
     player.makeSelectedCards(game);
@@ -128,9 +133,25 @@ function checkSelectedCards(snapShot){
     return;
   }
   if(value.length === game.data.players.length-1){
-    if(verifyPlayer().turn){
+    if(verifyPlayer(playerVerification).turn){
       $(".status").text("pick a winning card");
+      $(".cardtext").on("click", handleCardClick);
     }
   }
 }
-//getAllData grabs the data at any point needed at the beginning
+
+function handleWinningCardChange(snapShot){
+  var winningCard = snapShot.val();
+  if(winningCard === null){
+
+  }
+  else if(winningCard && game.data.winningCardSelected){
+    $(".card-white").html(winningCard.text);
+  }
+  else{
+    $(".card-white").html(winningCard.text);
+    verifyPlayer(winningCard.owner).score++;
+    game.data.winningCardSelected = true;
+    backend.saveState(game.data);
+  }
+}
