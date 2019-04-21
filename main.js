@@ -12,6 +12,7 @@ function onChange(payload){
 function firebaseOnload(){
   backend.getAllData(function(data){
     var selectedCardsRef = backend.db.database().ref("Cards Against Humanity/selectedCards");
+    $(".ready-button").hide();
     $(".confirm-button").hide();
     var playerName = null;
     var player = null;
@@ -54,6 +55,7 @@ function firebaseOnload(){
     }
     $(".cardtext").on("click",handleCardClick);
     $(".confirm-button").on("click",handleConfirmButtonClick);
+    $(".ready-button").on("click",handleReadyClick);
     if(playerVerification === "player1"){
       game.data.gameCard = deck.dealGameCard();
     }
@@ -95,10 +97,13 @@ function handleConfirmButtonClick(){
           $(".confirm-button").hide();
           if(game.data.selectedCards === undefined || game.data.selectedCards === null){
             game.data.selectedCards = [card];
+            var index = player.cards.indexOf(card);
+            player.cards.splice(index,1);
             backend.saveState(game.data);
           }
           else{
             game.data.selectedCards.push(card);
+            player.cards.splice(index,1);
             backend.saveState(game.data);
           }
         }
@@ -121,6 +126,14 @@ function verifyPlayer(playerToCheck){
   }
 }
 
+function grabJudge(){
+  for(var player of game.data.players){
+    if(player.turn){
+      return player;
+    }
+  }
+}
+
 function checkSelectedCards(snapShot){
   var value = snapShot.val();
   var player = Object.assign({}, verifyPlayer(playerVerification));
@@ -134,7 +147,7 @@ function checkSelectedCards(snapShot){
   }
   if(value.length === game.data.players.length-1){
     if(verifyPlayer(playerVerification).turn){
-      $(".status").text("pick a winning card");
+      $(".status").text("Pick a winning card");
       $(".cardtext").on("click", handleCardClick);
     }
   }
@@ -147,11 +160,24 @@ function handleWinningCardChange(snapShot){
   }
   else if(winningCard && game.data.winningCardSelected){
     $(".card-white").html(winningCard.text);
+    $(".status").text(grabJudge().name + " chose "+ winningCard.owner + "'s card.");
+    $(".ready-button").show();
   }
   else{
     $(".card-white").html(winningCard.text);
+    $(".status").text(grabJudge().name + " chose "+ winningCard.owner + "'s card.");
+    $(".ready-button").show();
     verifyPlayer(winningCard.owner).score++;
     game.data.winningCardSelected = true;
     backend.saveState(game.data);
+  }
+}
+
+function handleReadyClick(){
+  $(".ready-button").hide();
+  game.data.ready++;
+  backend.saveState(game.data);
+  if(game.data.ready === game.data.players.length){
+
   }
 }
