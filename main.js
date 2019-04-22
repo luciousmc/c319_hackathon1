@@ -141,7 +141,7 @@ function checkSelectedCards(snapShot){
   var value = snapShot.val();
   var player = Object.assign({}, verifyPlayer(playerVerification));
   player.makeSelectedCards = Player.prototype.makeSelectedCards;
-  if(player.name === "player1"){
+  if(player.name === "Player 1"){
     player.makeSelectedCards(game);
     backend.saveState(game.data);
   }
