@@ -1,6 +1,20 @@
+@media only screen and (max-width: 940px){
+    .cardtext, .card-black, .card-white {
+        font-size: 1vw;
+        font-weight: bold;
+    }
+}
+@font-face{
+    font-family: 'helveticaneuebold';
+    src: url('font/helvetica_neu_bold-webfont.woff2') format('woff2'),
+         url('font/helvetica_neu_bold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body{
     height: 100vh;
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: "helveticaneuebold",Helvetica,Arial,sans-serif;
 }
 .header-container{
     height: 10%;
@@ -37,7 +51,7 @@ body{
     font-weight: bold;
 }
 .font{
-    font-family: 'Helvetica Neue', Arial, sans-serif
+    font-family: 'helveticaneuebold', Helvetica,  Arial, sans-serif
 }
 .black {
     color: black;
@@ -72,6 +86,12 @@ body{
     padding-top: 15px;
     padding-bottom: 15px;
     margin-left: 1%;
+    transition-duration: 0.2s;
+}
+.cardSmall-container:hover{
+    background-color: black;
+    color: white;
+    cursor: pointer;
 }
 .top-offset{
     top: 5%;
@@ -84,10 +104,39 @@ body{
 }
 .playerTurn{
     top: 30%;
+    left: 10%;
     font-size: 30px;
     position: relative;
 }
 .image{
     width: 90%;
     height: 75%;
+}
+.btn-black-text{
+    position: relative;
+    font-size: 20px;
+    font-family:'helveticaneuebold', Helvetica,  Arial, sans-serif;
+    color: #000;
+    background-color: #ffffff;
+    border: 2px solid #151313;
+    transition-duration: 0.3s;
+    top: 10%;
+}
+.btn-black-text:hover{
+    background-color: black;
+    color: white;
+}
+.btn-white-text{
+    position: relative;
+    font-size: 20px;
+    font-family:'helveticaneuebold', Helvetica,  Arial, sans-serif;
+    color: white;
+    background-color: black;
+    border: 2px solid white;
+    transition-duration: 0.3s;
+    
+}
+.btn-white-text:hover{
+    background-color: white;
+    color: black;
 }

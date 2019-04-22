@@ -3,7 +3,7 @@ deck.shuffleGameDeck();
 deck.shufflePlayerDeck();
 var playerVerification = null;
 var game;
-var backend = new GenericFBModel("Cards Against Humanity", onChange, firebaseOnload);
+var backend = new GenericFBModel("Cards Against Humanity_anthony", onChange, firebaseOnload);
 
 function onChange(payload){
 
@@ -11,7 +11,7 @@ function onChange(payload){
 
 function firebaseOnload(){
   backend.getAllData(function(data){
-    var selectedCardsRef = backend.db.database().ref("Cards Against Humanity/selectedCards");
+    var selectedCardsRef = backend.db.database().ref("Cards Against Humanity_anthony/selectedCards");
     $(".ready-button").hide();
     $(".confirm-button").hide();
     var playerName = null;
@@ -19,8 +19,10 @@ function firebaseOnload(){
     if(data === null){
       game = new Game(deck.playerDeck, deck.gameDeck, backend);
       playerName = game.data.playerNames.pop()
+      $(".player-number").text(playerName);
       player = new Player(playerName, true);
       playerVerification = playerName;
+      
       $(".status").text("Waiting for other players");
       if(game.data.players === null){
         game.data.players = [player];
@@ -39,13 +41,14 @@ function firebaseOnload(){
       }
       else{
         playerName = game.data.playerNames.pop()
+        $(".player-number").text(playerName);
         playerVerification = playerName;
         player = new Player(playerName, false);
         game.data.players.push(player);
       }
     }
 
-    backend.db.database().ref('Cards Against Humanity/winningCard').on("value", handleWinningCardChange);
+    backend.db.database().ref('Cards Against Humanity_anthony/winningCard').on("value", handleWinningCardChange);
     selectedCardsRef.on("value", checkSelectedCards);
     player.cards = deck.dealPlayerCards(5);
     if(playerVerification === "player1"){
