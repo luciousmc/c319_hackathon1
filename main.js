@@ -51,7 +51,7 @@ function firebaseOnload(){
     backend.db.database().ref('Cards Against Humanity_anthony/winningCard').on("value", handleWinningCardChange);
     selectedCardsRef.on("value", checkSelectedCards);
     player.cards = deck.dealPlayerCards(5);
-    if(playerVerification === "player1"){
+    if(playerVerification === "Player 1"){
     }
     else{
       player.makePlayerArea();
@@ -59,7 +59,7 @@ function firebaseOnload(){
     $(".cardtext").on("click",handleCardClick);
     $(".confirm-button").on("click",handleConfirmButtonClick);
     $(".ready-button").on("click",handleReadyClick);
-    if(playerVerification === "player1"){
+    if(playerVerification === "Player 1"){
       game.data.gameCard = deck.dealGameCard();
     }
     $(".card-black").html(game.data.gameCard.text);
