@@ -36,6 +36,7 @@ class GenericFBModel{
   handleDataUpdate(data){
     var currentData = JSON.stringify(data.val());
     if(currentData!=this.lastSend){
+      console.log('genericFirebaseBackend::handleDataUpdate currentData: ', currentData, '; this.lastSend: ', this.lastSend);
       this.callback.call(null,data.val());
     }
   }

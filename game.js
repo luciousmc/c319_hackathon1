@@ -8,12 +8,14 @@ class Game {
       playerNames : ['Player 3','Player 2','Player 1'],//,'player4','player3','player2','player1'];//,'player14','player13','player12','player11','player10','player9','player8','player7','player6','player5','player4','player3','player2','player1']
       selecting : true,
       winningCardSelected : false,
-      ready : 0
+      winningCard: null,
+      playersReady : 0
     };
-    backend.db.database().ref('Cards Against Humanity_anthony/players').on("value", this.handlePlayerChange.bind(this));
-    backend.db.database().ref('Cards Against Humanity_anthony/selectedCards').on("value", this.handleSelectedCardsChange.bind(this));
-    backend.db.database().ref('Cards Against Humanity_anthony/winningCard').on("value", this.handleWinningCardChange.bind(this));
-    backend.db.database().ref('Cards Against Humanity_anthony/winningCardSelected').on("value", this.handleWinningCardSelectedChange.bind(this));
+    backend.db.database().ref('Cards Against Humanity/players').on("value", this.handlePlayerChange.bind(this));
+    backend.db.database().ref('Cards Against Humanity/selectedCards').on("value", this.handleSelectedCardsChange.bind(this));
+    backend.db.database().ref('Cards Against Humanity/winningCard').on("value", this.handleWinningCardChange.bind(this));
+    backend.db.database().ref('Cards Against Humanity/winningCardSelected').on("value", this.handleWinningCardSelectedChange.bind(this));
+    backend.db.database().ref('Cards Against Humanity/playersReady').on("value", this.handlePlayersReadyChange.bind(this));
   }
   handlePlayerChange(snapShot){
     this.data.players = snapShot.val();
@@ -26,5 +28,8 @@ class Game {
   }
   handleWinningCardSelectedChange(snapShot){
     this.data.winningCardSelected = snapShot.val();
+  }
+  handlePlayersReadyChange(snapShot){
+    this.data.playersReady = snapShot.val();
   }
 }
