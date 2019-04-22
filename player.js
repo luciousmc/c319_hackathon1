@@ -8,7 +8,9 @@ class Player {
   }
 makePlayerArea(){
   for(var card of this.cards){
-    var cardMade = card.render();
+    var cardClone = Object.assign({}, card);
+    cardClone.render = Card.prototype.render;
+    var cardMade = cardClone.render();
     $('.cardArea-container').append(cardMade);
   }
 }
