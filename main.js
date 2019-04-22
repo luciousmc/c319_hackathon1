@@ -3,7 +3,7 @@ deck.shuffleGameDeck();
 deck.shufflePlayerDeck();
 var playerVerification = null;
 var game;
-var backend = new GenericFBModel("Cards Against Humanity_anthony", onChange, firebaseOnload);
+var backend = new GenericFBModel("Cards Against Humanity", onChange, firebaseOnload);
 
 function onChange(payload){
 
@@ -11,7 +11,7 @@ function onChange(payload){
 
 function firebaseOnload(){
   backend.getAllData(function(data){
-    var selectedCardsRef = backend.db.database().ref("Cards Against Humanity_anthony/selectedCards");
+    var selectedCardsRef = backend.db.database().ref("Cards Against Humanity/selectedCards");
     $(".ready-button").hide();
     $(".confirm-button").hide();
     var playerName = null;
@@ -49,7 +49,7 @@ function firebaseOnload(){
       }
     }
 
-    backend.db.database().ref('Cards Against Humanity_anthony/winningCard').on("value", handleWinningCardChange);
+    backend.db.database().ref('Cards Against Humanity/winningCard').on("value", handleWinningCardChange);
     selectedCardsRef.on("value", checkSelectedCards);
     player.cards = deck.dealPlayerCards(5);
     backend.saveState(game.data);
